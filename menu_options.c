@@ -840,7 +840,6 @@ setting settplayer_arr[] = {
 	ADDSET_ADVANCED_SECTION(),
 	ADDSET_STRING	("Teamchat Name", cl_fakename),
 	ADDSET_STRING	("Teamchat Name Suffix", cl_fakename_suffix),
-        ADDSET_BOOL		("Fullbright Skins", r_fullbrightSkins),
 	ADDSET_BASIC_SECTION(),
 	
     ADDSET_SEPARATOR("Movement"),
