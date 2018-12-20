@@ -1081,11 +1081,6 @@ setting settbinds_arr[] = {
 	ADDSET_BASIC_SECTION(),
 
 	ADDSET_SEPARATOR("Select"),
-	ADDSET_BIND("Primary Weapon", "impulse 1"),
-	ADDSET_BIND("Secondary Weapon", "impulse 2"),
-	ADDSET_BIND("Tertiary Weapon", "impulse 3"),
-	ADDSET_BIND("Melee Weapon", "impulse 4"),
-	ADDSET_BIND("Class Menu", "impulse 5"),
 	ADDSET_BIND("Previous Weapon", "weapprev"),
 	ADDSET_BIND("Next Weapon", "weapnext"),
 	ADDSET_BIND("Last Weapon", "weaplast"),
