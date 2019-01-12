@@ -6,7 +6,8 @@
 ## TODO
 # - Run Valgrind across the binary
 # - Compile Windows x64 binary (current is 32-bit)
-# Add in 'annobin' GCC plugin to test for hardened compile flags:  https://sourceware.org/git/?p=annobin.git;a=tree;f=scripts;h=7b395615d7638ec282799e9ce94b9df7eac34039;hb=HEAD
+# - Add in 'annobin' GCC plugin to test for hardened compile flags:  https://sourceware.org/git/?p=annobin.git;a=tree;f=scripts;h=7b395615d7638ec282799e9ce94b9df7eac34039;hb=HEAD
+# - Resolve the remaining GCC CFLAGS/LDFLAGS_c option errors
 ##
 
 ifdef EZ_CONFIG_FILE
@@ -71,7 +72,7 @@ CFLAGS += -O3
 # 
 #CFLAGS += -fasynchronous-unwind-tables
 # Append the "debug" string to the binary to indicate it's compiled with debug symbols
-TARG_c = fortressone-build$(REV)-debug.exe
+#TARG_c = fortressone-build$(REV)-debug.exe
 ###
 
 ### Additional security hardening GCC flags ###
@@ -91,13 +92,12 @@ CFLAGS += -Wconversion -Wformat
 # Reject potentially unsafe format string arguents
 CFLAGS += -Wformat-security -ftrapv 
 
-## SEEMS TO WORK BELOW ##
 # No text relocations for shared libraries
 CFLAGS += -fpic -shared
 # Run-time bounds checking for C++ strings and containers
 CFLAGS += -D_GLIBCXX_ASSERTIONS
 # Increased reliability of backtraces
-CFLAGS +=-fasynchronous-unwind-tables
+CFLAGS += -fasynchronous-unwind-tables
 # Enable table-based thread cancellation
 CFLAGS += -fexceptions
 # Avoid temporary files, speeding up builds
@@ -140,15 +140,15 @@ CFLAGS += -mmmx -msse -msse2 -msse3 -mssse3 -msse2avx
 CFLAGS += -s
 
 ### Linker options ###
-# Enable ASLR, DEP and Integrity (Windows only) on the resulting binary
-# Read-only segments after relocation, no executable stack or heap
-LDFLAGS_c += -Wl,--nxcompat,--dynamicbase,relro,--forceinteg,-z relro,-z noexecstack,-z noexecheap
 # Reduces the ability of an attacker to load, manipulate, and dump shared objects
-LDFLAGS_c += -Wl,-z,nodlopen and -Wl,-z,nodump
+LDFLAGS_c += -Wl,-z,nodlopen, -Wl,-z,nodump
 # Detect and reject underlinking
 LDFLAGS_c += -Wl,-z,defs
 # Disable lazy binding
 LDFLAGS_c += -Wl,-z,now
+# Enable Position Independant Code (PIE)
+LDFLAGS_c += -Wl,-pie
+
 ######
 
 CFLAGS_c :=
@@ -161,6 +161,9 @@ ifdef CONFIG_WINDOWS
     # Mark images as DEP and ASLR compatible on x86 Windows
     ifeq ($(CPU),x86)
         LDFLAGS_c += -Wl,--nxcompat,--dynamicbase
+		# Enable ASLR, DEP and Integrity (Windows only) on the resulting binary
+		# Read-only segments after relocation, no executable stack or heap
+		LDFLAGS_c += -Wl,--nxcompat,--dynamicbase,relro,--forceinteg,-z relro,-z noexecstack,-z noexecheap
     endif
 else
     # Hide ELF symbols by default
