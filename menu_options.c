@@ -403,6 +403,14 @@ const char* gl_texturemode_enum[] = {
 	"very high", "GL_NEAREST"
 };
 
+extern cvar_t r_conscale;
+const char* r_conscale_enum[] = {
+	"100%", "1",
+	"200%", "2",
+	"400%", "4",
+	"800%", "8"
+};
+
 settings_page settfps;
 
 void CT_Opt_FPS_Draw (int x, int y, int w, int h, CTab_t *tab, CTabPage_t *page)
@@ -1207,6 +1215,7 @@ setting settsystem_arr[] = {
 
 	//Video
 	ADDSET_SEPARATOR("Video"),
+	ADDSET_ENUM	("Scale", r_conscale, r_conscale_enum),
 	ADDSET_NUMBER	("Gamma", v_gamma, 0.1, 2.0, 0.1),
 	ADDSET_NUMBER	("Contrast", v_contrast, 1, 5, 0.1),
 	ADDSET_ADVANCED_SECTION(),
