@@ -9,8 +9,8 @@
 # there will also be an ezquake.zip which basically just zips up the .app.
 #
 
-BUNDLE_NAME=ezQuake.app
-BINARY=ezquake-darwin-x86_64
+BUNDLE_NAME=FortressOne.app
+BINARY=fortressone-darwin-x86_64
 ICON_FILE=ezquake.icns
 
 if [ -d $BUNDLE_NAME ]; then
@@ -24,10 +24,9 @@ if [ ! -f $BINARY ]; then
 fi
 
 mkdir -p $BUNDLE_NAME/Contents/MacOS
-mkdir -p $BUNDLE_NAME/Contents/Resources/id1
+mkdir -p $BUNDLE_NAME/Contents/Resources/qw
 cp $BINARY $BUNDLE_NAME/Contents/MacOS/.
 cp $(dirname $0)/$ICON_FILE $BUNDLE_NAME/Contents/Resources/.
-touch $BUNDLE_NAME/Contents/Resources/id1/Copy\ your\ pak0.pak\ and\ pak1.pak\ files\ here.txt
 
 echo '#!/bin/sh' > $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '' >> $BUNDLE_NAME/Contents/MacOS/ezquake
@@ -38,7 +37,8 @@ echo '    open "$DIRNAME"/../Resources/id1/' >> $BUNDLE_NAME/Contents/MacOS/ezqu
 echo '    exit' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo 'fi' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '' >> $BUNDLE_NAME/Contents/MacOS/ezquake
-echo "exec \"\$DIRNAME\"/$BINARY -basedir \"\$DIRNAME\"/../Resources" >> $BUNDLE_NAME/Contents/MacOS/ezquake
+echo 'cd "$DIRNAME"/../Resources/' >> $BUNDLE_NAME/Contents/MacOS/ezquake 
+echo "exec \"\$DIRNAME\"/$BINARY" >> $BUNDLE_NAME/Contents/MacOS/ezquake
 
 chmod u+x $BUNDLE_NAME/Contents/MacOS/ezquake
 
@@ -66,3 +66,13 @@ chmod u+x $BUNDLE_NAME/Contents/MacOS/ezquake
 
 sh $(dirname $0)/fixbundle.sh $BUNDLE_NAME $BUNDLE_NAME/Contents/MacOS/$BINARY
 ditto -c -k --keepParent --arch x86_64 $BUNDLE_NAME ezquake.zip
+
+wget -c https://github.com/FortressOne/linux-installer/releases/download/v1.0.0/fortressone-linux-portable-1.0.0.zip
+unzip fortressone-linux-portable-1.0.0.zip
+mv fortressone/* $BUNDLE_NAME/Contents/Resources/
+rm -rf fortressone
+
+ln -s ../fortress/fortressone.pk3 $BUNDLE_NAME/Contents/Resources/qw/fortressone.pk3
+ln -s ../fortress/pak0.pk3 $BUNDLE_NAME/Contents/Resources/qw/pak0.pk3
+
+echo 'gamedir fortress' > $BUNDLE_NAME/Contents/Resources/qw/autoexec.cfg

@@ -804,8 +804,10 @@ void FS_InitFilesystemEx( qbool guess_cwd ) {
 		i = COM_CheckParm ("+gamedir");
 	if (i && i < COM_Argc() - 1)
 		FS_SetGamedir (COM_Argv(i + 1), true);
+#ifndef __APPLE__
         else
                 FS_SetGamedir ("fortress", false);
+#endif
 }
 
 void FS_InitFilesystem( void ) {
