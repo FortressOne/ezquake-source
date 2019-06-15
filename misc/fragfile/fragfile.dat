@@ -304,6 +304,7 @@
 #DEFINE WEAPON_CLASS    HANDGREN            "hand grenade"      "hgren"
 #DEFINE WEAPON_CLASS    MIRVGREN            "mirv grenade"      "mirv"
 #DEFINE WEAPON_CLASS    NAILGREN            "nail grenade"      "nailg"
+#DEFINE WEAPON_CLASS    SHOCKGREN           "shock grenade"     "shock"
 
 #DEFINE WEAPON_CLASS    DETPACK             "detpack"           "dpack"
 #DEFINE WEAPON_CLASS    DISPENSER           "dispenser"         "disp"
@@ -350,6 +351,7 @@
 // Soldier
 #DEFINE OBITUARY	X_FRAGGED_BY_Y	NAILGREN		" gets flayed by "  "'s nail grenade"
 #DEFINE OBITUARY	X_FRAGGED_BY_Y	NAILGREN		" gets perforated by " "'s nail grenade"
+#DEFINE OBITUARY	X_FRAGGED_BY_Y	SHOCKGREN		" gets melted by " "'s shock grenade"
 #DEFINE OBITUARY	X_FRAGGED_BY_Y	PROXI			" gets too friendly with " "'s Proxi grenade"
 #DEFINE OBITUARY	X_FRAGGED_BY_Y	ROCKET_LAUNCHER		" is reamed by " "'s rocket"
 #DEFINE OBITUARY	X_FRAGGED_BY_Y	ROCKET_LAUNCHER		"'s bunghole was ripped by " "'s rocket"
@@ -496,6 +498,7 @@
 #DEFINE OBITUARY	PLAYER_SUICIDE	HANDGREN		" tiptoed over his own grenade"
 #DEFINE OBITUARY	PLAYER_SUICIDE	INCENDIARY_ROCKET	" chars himself with an incendiary rocket"
 #DEFINE OBITUARY	PLAYER_SUICIDE	NAILGREN		" hammers himself"
+#DEFINE OBITUARY	PLAYER_SUICIDE	SHOCKGREN		" electrocutes himself"
 #DEFINE OBITUARY	PLAYER_SUICIDE	NOWEAPON		" bakes himself"
 #DEFINE OBITUARY	PLAYER_SUICIDE	NOWEAPON		" couldn't outrun his airspam"
 #DEFINE OBITUARY	PLAYER_SUICIDE	NOWEAPON		" died impossibly!"
