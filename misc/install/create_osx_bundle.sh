@@ -30,10 +30,11 @@ cp $(dirname $0)/$ICON_FILE $BUNDLE_NAME/Contents/Resources/.
 
 echo '#!/bin/sh' > $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '' >> $BUNDLE_NAME/Contents/MacOS/ezquake
-echo 'DIRNAME=$(dirname "$0")' >> $BUNDLE_NAME/Contents/MacOS/ezquake
+echo 'DIRNAME="$(cd "$(dirname "$0")"; pwd -P)"' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo 'if [ ! -f "$DIRNAME"/../Resources/id1/pak0.pak ]; then' >> $BUNDLE_NAME/Contents/MacOS/ezquake
-echo '    open "$DIRNAME"/../Resources/id1/' >> $BUNDLE_NAME/Contents/MacOS/ezquake
+echo '    osascript -e "tell app \"Finder\" to open (\"${DIRNAME%/*}/Resources/id1/\" as POSIX file)"' >> $BUNDLE_NAME/Contents/MacOS/ezquake
+echo '    osascript -e "tell app \"Finder\" to activate"' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '    exit' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo 'fi' >> $BUNDLE_NAME/Contents/MacOS/ezquake
 echo '' >> $BUNDLE_NAME/Contents/MacOS/ezquake
